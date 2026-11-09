@@ -171,7 +171,7 @@ button[disabled]{cursor:default}
 #mus.off::after,#sfx.off::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(to top right,transparent calc(50% - 2px),#e5322d calc(50% - 2px),#e5322d calc(50% + 2px),transparent calc(50% + 2px)),linear-gradient(to bottom right,transparent calc(50% - 2px),#e5322d calc(50% - 2px),#e5322d calc(50% + 2px),transparent calc(50% + 2px))}
 
 /* --- credits / licenses --- */
-#crb{position:fixed;top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));width:44px;min-height:44px;height:44px;padding:0;border-radius:50%;font-size:20px;letter-spacing:0;opacity:.85;z-index:5}
+#crb{white-space:nowrap}
 #cr{background:rgba(20,10,4,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 #cr h2{font-size:clamp(24px,5vw,44px)}
 #crl{display:flex;flex-direction:column;gap:10px;align-items:center}
