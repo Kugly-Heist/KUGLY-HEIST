@@ -158,3 +158,14 @@ button[disabled]{cursor:default}
 
 /* menu overview: 5 stats fit narrow phones */
 @media (max-width:480px){#menu .st{gap:8px;padding:10px 8px}#menu .st b{font-size:1.35em}}
+
+/* --- lobby: no scrolling, controls text removed, credit kept as a tiny line --- */
+#menu{overflow:hidden;touch-action:none;overscroll-behavior:none}
+.credit{position:fixed;left:0;right:0;bottom:max(4px,env(safe-area-inset-bottom));text-align:center;font-size:10px;opacity:.55;pointer-events:none;text-shadow:0 1px 4px #000;padding:0 8px}
+@media (max-height:700px) and (orientation:portrait){#menu,.mc1,.mc2{gap:8px}#menu .sub:first-child{display:none}#menu h1{font-size:clamp(40px,12vw,64px)}#play{min-height:54px;font-size:24px}.aud{padding:8px 12px;gap:8px}}
+@media (max-height:380px) and (orientation:landscape){#menu .sub{display:none}#menu h1{font-size:clamp(30px,6vw,46px)}#play{min-height:46px;font-size:20px}.nav button,.aud .mrow button{min-height:38px}.vol input{height:22px}#menu .st{padding:4px 10px}#menu .st b{font-size:1.3em}.credit{display:none}}
+
+/* --- Music / SFX toggles: red cross over the button when off --- */
+#mus,#sfx{position:relative}
+#mus.off,#sfx.off{opacity:.8}
+#mus.off::after,#sfx.off::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(to top right,transparent calc(50% - 2px),#e5322d calc(50% - 2px),#e5322d calc(50% + 2px),transparent calc(50% + 2px)),linear-gradient(to bottom right,transparent calc(50% - 2px),#e5322d calc(50% - 2px),#e5322d calc(50% + 2px),transparent calc(50% + 2px))}
