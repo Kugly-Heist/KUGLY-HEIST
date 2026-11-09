@@ -384,9 +384,12 @@ function shopRender(){$('shm').textContent='$'+save.money;$('shl').innerHTML=UP.
 $('shl').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b||b.disabled)return;const u=UP.find(x=>x.k==b.dataset.k),pr=upPrice(u);if((!u.cons&&lvl(u)>=u.max)||save.money<pr)return;save.money-=pr;if(u.cons)save[u.k]=(save[u.k]|0)+1;else save.up[u.k]++;persist();sPlay('buy')||sfx.pu();shopRender()});
 /* credits & licenses screen — add a line to CREDITS for every asset that needs attribution */
 const CREDITS=[
- {n:'three.js + GLTFLoader',b:'© 2010–2021 Three.js Authors',l:'MIT License'},
- {n:'Agent model “CTM_SAS | CS2 Agent Model”',b:'by Alex (sketchfab.com/alyax)',l:'CC-BY-4.0'}
- /* ,{n:'Music',b:'Author / source',l:'License'} */
+ {n:'CS2 / CS:GO sounds',b:'© Valve Corporation (borrowed via myinstants.com)',l:'not owned by this game'},
+ {n:'Music & sound clips from YouTube',b:'© their original creators',l:'borrowed, not owned by this game'},
+ {n:'Intro video, icons & other images',b:'© their original owners',l:'third-party material, not owned by this game'},
+ {n:'Agent model “CTM_SAS | CS2 Agent Model”',b:'by Alex (sketchfab.com/alyax)',l:'CC-BY-4.0'},
+ {n:'three.js + GLTFLoader',b:'© 2010–2021 Three.js Authors',l:'MIT License'}
+ /* add more: ,{n:'What',b:'Author / source',l:'License / status'} */
 ];
 $('crl').innerHTML=CREDITS.map(c=>`<div class="sr"><div class="i"><b>${c.n}</b><small>${c.b} · ${c.l}</small></div></div>`).join('')+'<div class="help">Counter-Strike, CS2 and related names, sounds and references are trademarks / property of Valve Corporation. This is an unofficial fan project and is not affiliated with or endorsed by Valve. All other trademarks belong to their respective owners.</div>';
 on('crb',()=>show('cr'));on('crx',()=>show('menu'));
