@@ -289,7 +289,7 @@ const slide=()=>{if(state!='play')return;if(P.y>gy+.05)P.vy=-18;P.slide=.7;sfx.s
 function hit(o){o.hit=true;if(P.shield){P.shield=false;o.m.visible=false;sfx.pu();emit(P.x,P.y+.9,P.z,30,0x55ccff,5,2);return}gap-=6;P.inv=1.4;P.stun=.5;starT=2.4;shake=.5;sPlay('hit',.22)||sfx.hit();emit(P.x,P.y+.9,P.z,30,0xffa040,5,2);const f=$('fl');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');try{navigator.vibrate&&navigator.vibrate(50)}catch(e){}if(gap<=3)die()}
 function collect(k){const q=k.m.position,co=k.type=='coin';emit(q.x,q.y,q.z,co?9:22,co?0xffd060:k.type=='shield'?0x55ccff:k.type=='hp'?0x7bd35a:k.type=='mag'?0xff5577:0xb060ff,co?2:4,2);if(k.type=='coin'){coins++;scoreF+=10*(P.x2>0?2:1);sfx.coin()}else{sfx.pu();if(k.type=='shield')P.shield=true;else if(k.type=='hp'){gap=Math.min(22,gap+9);P.inv=Math.max(P.inv,.6)}else if(k.type=='mag')P.mag=8+2*save.up.mag;else P.x2=10+2*save.up.x2}}
 function die(){state='caught';capT=0;sfx.over();try{navigator.vibrate&&navigator.vibrate([80,40,140])}catch(e){}const d=Math.floor(dist),sc=Math.floor(scoreF);$('rec').textContent=(d>save.best||sc>save.bs)?'★ NEW RECORD ★':'';save.runs++;save.money+=coins;if(d>save.best)save.best=d;if(sc>save.bs)save.bs=sc;persist();$('od').textContent=d+' m';$('os').textContent=sc;$('om').textContent='$'+coins}
-function show(id){['menu','pause','over','shop','ctl'].forEach(i=>$(i).classList.toggle('hide',i!=id));$('hud').classList.toggle('hide',id=='menu'||id=='over'||id=='shop'||id=='ctl')}
+function show(id){['menu','pause','over','shop','ctl','cr'].forEach(i=>$(i).classList.toggle('hide',i!=id));$('hud').classList.toggle('hide',id=='menu'||id=='over'||id=='shop'||id=='ctl'||id=='cr')}
 function menuStats(){$('bd').textContent=save.best+' m';$('bs').textContent=save.bs;$('bm').textContent='$'+save.money;$('br').textContent=save.runs;$('bk').textContent=(save.bd|0)}
 function bank(){if(state!='play'&&state!='pause')return;const d=Math.floor(dist),sc=Math.floor(scoreF);save.runs++;save.money+=coins;coins=0;if(d>save.best)save.best=d;if(sc>save.bs)save.bs=sc;persist()}
 function toMenu(){sStop('win');bank();state='menu';gap=9;obs.forEach(o=>S.remove(o.m));pks.forEach(k=>S.remove(k.m));obs.length=pks.length=0;menuStats();show('menu');$('hud').classList.add('hide');startMusic('lobby')}
@@ -382,6 +382,14 @@ const UP=[{k:'mag',n:'🧲 Magnet duration',d:'+2 s per level (base 8 s)',max:5,
 const lvl=u=>u.cons?(save[u.k]|0):save.up[u.k],upPrice=u=>u.cons?u.base:u.base*(lvl(u)+1);
 function shopRender(){$('shm').textContent='$'+save.money;$('shl').innerHTML=UP.map(u=>{const l=lvl(u),mx=!u.cons&&l>=u.max,pr=upPrice(u);return `<div class="sr"><div class="i"><b>${u.n}</b> <span class="rec">${u.cons?(l?'×'+l+' IN STOCK':''):u.max>1?'Lv '+l+'/'+u.max:(l?'OWNED':'')}</span><small>${typeof u.d=='function'?u.d():u.d}</small></div><button data-k="${u.k}"${mx||save.money<pr?' disabled':''}>${mx?'MAX':'$'+pr}</button></div>`}).join('')}
 $('shl').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b||b.disabled)return;const u=UP.find(x=>x.k==b.dataset.k),pr=upPrice(u);if((!u.cons&&lvl(u)>=u.max)||save.money<pr)return;save.money-=pr;if(u.cons)save[u.k]=(save[u.k]|0)+1;else save.up[u.k]++;persist();sPlay('buy')||sfx.pu();shopRender()});
+/* credits & licenses screen — add a line to CREDITS for every asset that needs attribution */
+const CREDITS=[
+ {n:'three.js + GLTFLoader',b:'© 2010–2021 Three.js Authors',l:'MIT License'},
+ {n:'Agent model “CTM_SAS | CS2 Agent Model”',b:'by Alex (sketchfab.com/alyax)',l:'CC-BY-4.0'}
+ /* ,{n:'Music',b:'Author / source',l:'License'} */
+];
+$('crl').innerHTML=CREDITS.map(c=>`<div class="sr"><div class="i"><b>${c.n}</b><small>${c.b} · ${c.l}</small></div></div>`).join('')+'<div class="help">Counter-Strike, CS2 and related names, sounds and references are trademarks / property of Valve Corporation. This is an unofficial fan project and is not affiliated with or endorsed by Valve. All other trademarks belong to their respective owners.</div>';
+on('crb',()=>show('cr'));on('crx',()=>show('menu'));
 on('shopb',()=>{shopRender();show('shop')});on('ctlb',()=>{rbd=null;ctlRender();show('ctl')});on('ctb',()=>{rbd=null;show('menu')});on('ctr',()=>{for(const a in KDEF)keys[a]=KDEF[a].slice();rbd=null;saveKeys();ctlRender()});on('shb',()=>{menuStats();show('menu')});
 menuStats();requestAnimationFrame(loop);
 (function(){const a=A();if(!a)return;getBuf('lobby').then(()=>{if(state=='menu'&&musOn&&!musGo&&!pend&&a.state=='running')startMusic('lobby')}).catch(()=>{})})();
