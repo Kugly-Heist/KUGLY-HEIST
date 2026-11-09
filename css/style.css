@@ -155,3 +155,6 @@ button[disabled]{cursor:default}
 .pz{position:fixed;z-index:900;display:flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:12px;background:linear-gradient(#ffd36e,#e49a2c);color:#2a1a0e;font:700 30px "Trebuchet MS",system-ui,sans-serif;letter-spacing:.14em;pointer-events:auto;transition:left .46s cubic-bezier(.7,0,.3,1),top .46s cubic-bezier(.7,0,.3,1),right .46s cubic-bezier(.7,0,.3,1),bottom .46s cubic-bezier(.7,0,.3,1),border-radius .46s,font-size .46s,opacity .33s ease}
 .pz.go{left:0;top:0;right:0;bottom:0;border-radius:0;font-size:clamp(60px,16vw,160px)}
 .pz.out{opacity:0;pointer-events:none}
+
+/* menu overview: 5 stats fit narrow phones */
+@media (max-width:480px){#menu .st{gap:8px;padding:10px 8px}#menu .st b{font-size:1.35em}}
