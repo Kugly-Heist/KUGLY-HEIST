@@ -138,3 +138,15 @@ button[disabled]{cursor:default}
  #chase{left:12px;right:78px;width:auto;transform:none;top:max(10px,env(safe-area-inset-top))}
  #hud .l{top:calc(max(12px,env(safe-area-inset-top)) + 46px)}
 }
+
+/* --- BUSTED screen: fits small phones (portrait + landscape) --- */
+#rec:empty{display:none}
+@media (max-width:480px){#over .st{gap:8px;width:100%;justify-content:center}#over .st>div{min-width:0;flex:1 1 0;padding:8px 6px;font-size:12px}#over .st b{font-size:1.35em}}
+@media (max-height:520px){
+ #over{flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px 12px;padding:8px 16px}
+ #over h2{font-size:32px;width:100%;margin:0}
+ #over .rec{width:100%;font-size:12px}
+ #over .st{width:100%;justify-content:center;gap:10px}
+ #over .st>div{min-width:0;padding:4px 12px;font-size:12px}#over .st b{font-size:1.25em}
+ #over>button{width:min(240px,42vw);min-height:44px;padding:8px 12px;font-size:16px}
+}
