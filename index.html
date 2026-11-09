@@ -28,13 +28,19 @@ button.s{background:#3b2a1c;color:var(--cream);box-shadow:0 3px 0 #1b0f06;paddin
 #fl{position:fixed;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,#0000 45%,#e0201cc0 100%)}#fl.on{animation:flh .45s ease-out}@keyframes flh{from{opacity:.95}to{opacity:0}}#chase.warn i{animation:wp .45s infinite alternate}@keyframes wp{to{border-color:#ff4030;box-shadow:0 0 14px #f33}}
 #tut{position:absolute;left:50%;top:22%;transform:translateX(-50%);background:#000b;border:2px solid var(--gold);border-radius:14px;padding:12px 22px;text-align:center;font-size:clamp(14px,2.6vw,22px);max-width:86vw;line-height:1.4}#tut small{display:block;opacity:.7;font-size:.6em;margin-top:4px}.kc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.kb{padding:6px 12px;font-size:13px;min-width:44px}.kb.on{background:linear-gradient(#ffd36e,#e49a2c);color:#2a1a0e}
 .help{font-size:13px;opacity:.8;max-width:520px;line-height:1.5}.rec{color:#7bd35a;font-weight:700;letter-spacing:.2em}
+#intro{position:fixed;inset:0;z-index:1000;background:#000;display:none;opacity:1;transition:opacity .55s ease}
+#intro.on{display:block}#intro.out{opacity:0;pointer-events:none}
+#intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+@media (orientation:portrait){#intro video{object-fit:contain}}
+#skip{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));padding:10px 24px;font-size:15px;opacity:.85}
 </style></head><body>
+<div id="intro"><video id="introv" src="assets/intro.mp4" preload="none" playsinline webkit-playsinline disablepictureinpicture></video><button class="s" id="skip">SKIP ▶▶</button></div>
 <div id="hud" class="hide"><div class="l"><div id="d">0 m</div><div id="s">0</div><div id="m">$0</div></div>
 <div id="chase"><span>KUGLY</span><i><b id="cb"></b></i></div><div id="pu"></div><div id="zn"></div><div id="tut" class="hide"></div><button id="pb" class="s">❚❚</button></div>
 <div id="fl"></div>
 <div id="menu" class="panel"><div class="sub">THE GREAT</div><h1>CHICKEN HEIST</h1><div class="sub">KARAMBIT ESCAPE</div>
 <div class="st"><div>Best distance<b id="bd">0 m</b></div><div>Best score<b id="bs">0</b></div><div>Money<b id="bm">$0</b></div><div>Runs<b id="br">0</b></div></div>
-<button id="play">PLAY</button><div><button class="s" id="shopb">🛒 Shop</button> <button class="s" id="ctlb">⌨ Controls</button> <button class="s" id="mus">♪ Music: on</button> <button class="s" id="sfx">🔊 SFX: on</button> <button class="s" id="rs">Reset progress</button></div><div class="vol"><label>♪ Music <input type="range" class="vs" data-k="mv" min="0" max="200" step="5"><b></b></label><label>🔊 SFX <input type="range" class="vs" data-k="sv" min="0" max="200" step="5"><b></b></label></div>
+<button id="play">PLAY</button><div><button class="s" id="shopb">🛒 Shop</button> <button class="s" id="introb">🎬 Intro</button> <button class="s" id="ctlb">⌨ Controls</button> <button class="s" id="mus">♪ Music: on</button> <button class="s" id="sfx">🔊 SFX: on</button> <button class="s" id="rs">Reset progress</button></div><div class="vol"><label>♪ Music <input type="range" class="vs" data-k="mv" min="0" max="200" step="5"><b></b></label><label>🔊 SFX <input type="range" class="vs" data-k="sv" min="0" max="200" step="5"><b></b></label></div>
 <div class="help">A/D or ←/→ change lane · W/↑/Space jump · S/↓ slide · Esc pause<br>Swipe on touch screens. Dodge, grab cash, keep the agent behind you.<br><small>Agent: “CTM_SAS | CS2 Agent Model” by Alex (sketchfab.com/alyax), CC-BY-4.0</small></div></div>
 <div id="shop" class="panel hide"><h2>SHOP</h2><div class="st"><div>Money<b id="shm">$0</b></div></div><div id="shl"></div><button class="s" id="shb">Back</button></div>
 <div id="ctl" class="panel hide"><h2>CONTROLS</h2><div id="ctll"></div><div class="help">Click a key, then press the new one · Backspace removes it · Esc cancels<br>Gamepad: stick / D-pad move · A jump · B slide · Start pause</div><div><button class="s" id="ctr">Reset defaults</button> <button class="s" id="ctb">Back</button></div></div>
@@ -4026,9 +4032,9 @@ let tx,ty,tdone=true;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;t
 const swp=(x,y)=>{if(tdone)return;const dx=x-tx,dy=y-ty;if(Math.max(Math.abs(dx),Math.abs(dy))<30)return;tdone=true;if(Math.abs(dx)>Math.abs(dy))mv(dx>0?1:-1);else dy<0?jump():slide()};
 addEventListener('touchmove',e=>swp(e.touches[0].clientX,e.touches[0].clientY),{passive:true});addEventListener('touchend',e=>swp(e.changedTouches[0].clientX,e.changedTouches[0].clientY),{passive:true});
 const on=(i,f)=>$(i).addEventListener('click',()=>{A();sfx.click();f()});
-on('play',play);on('again',play);on('rst',play);on('res',pause);on('pb',pause);on('mm',toMenu);on('mm2',toMenu);
+on('play',()=>window.introGate?introGate(play):play());on('again',play);on('rst',play);on('res',pause);on('pb',pause);on('mm',toMenu);on('mm2',toMenu);
 on('mus',()=>{if(musOn&&!musGo&&!pend){startMusic(state=='menu'?'lobby':'run');return}musOn=!musOn;musOn?startMusic(state=='menu'?'lobby':'run'):stopMusic();$('mus').textContent='♪ Music: '+(musOn?'on':'off')});on('sfx',()=>{sfxOn=!sfxOn;$('sfx').textContent='🔊 SFX: '+(sfxOn?'on':'off')});
-on('rs',()=>{if(confirm('Reset all saved progress?')){save={best:0,bs:0,money:0,runs:0,mv:save.mv,sv:save.sv,up:{mag:0,x2:0,sh:0},tut:0,q:save.q,keys:save.keys};persist();menuStats()}});
+on('rs',()=>{if(confirm('Reset all saved progress?')){save={best:0,bs:0,money:0,runs:0,mv:save.mv,sv:save.sv,up:{mag:0,x2:0,sh:0},tut:0,q:save.q,keys:save.keys,intro:save.intro};persist();menuStats()}});
 const applyVol=()=>[srcL,srcM,srcO].forEach(s=>{if(s&&s._g)s._g.gain.value=s._v*save.mv/100}),syncVol=()=>document.querySelectorAll('.vs').forEach(i=>{i.value=save[i.dataset.k];i.nextElementSibling.textContent=save[i.dataset.k]+'%'});
 document.querySelectorAll('.vs').forEach(i=>{i.addEventListener('input',()=>{save[i.dataset.k]=+i.value;syncVol();applyVol()});i.addEventListener('change',()=>{persist();if(i.dataset.k=='sv')sfx.click()})});syncVol();
 const UP=[{k:'mag',n:'🧲 Magnet duration',d:'+2 s per level (base 8 s)',max:5,base:60},{k:'x2',n:'×2 Score duration',d:'+2 s per level (base 10 s)',max:5,base:60},{k:'sh',n:'🛡 Start with shield',d:'Every run begins with a shield',max:1,base:200}];
@@ -4038,4 +4044,23 @@ $('shl').addEventListener('click',e=>{const b=e.target.closest('button[data-k]')
 on('shopb',()=>{shopRender();show('shop')});on('ctlb',()=>{rbd=null;ctlRender();show('ctl')});on('ctb',()=>{rbd=null;show('menu')});on('ctr',()=>{for(const a in KDEF)keys[a]=KDEF[a].slice();rbd=null;saveKeys();ctlRender()});on('shb',()=>{menuStats();show('menu')});
 menuStats();requestAnimationFrame(loop);
 (function(){const a=A();if(!a)return;getBuf('lobby').then(()=>{if(state=='menu'&&musOn&&!musGo&&!pend&&a.state=='running')startMusic('lobby')}).catch(()=>{})})();
+</script>
+<script>
+/* ---------- intro video: first PLAY only, SKIP, replay from the menu ---------- */
+(function(){const ov=$('intro'),v=$('introv');let act=0,after=null,tmo;
+if(!save.intro){v.preload='auto';try{v.load()}catch(e){}}
+function finish(){if(!act)return;act=0;clearTimeout(tmo);v.pause();const f=after;after=null;
+ if(f)f();else{startMusic('lobby')} /* replay from menu -> back to the menu */
+ ov.classList.add('out');setTimeout(()=>{if(!act){ov.classList.remove('on','out');try{v.currentTime=0}catch(e){}}},600)}
+function run(next){if(act)return;act=1;after=next;stopMusic();
+ ov.classList.remove('out');ov.classList.add('on');v.currentTime=0;v.volume=cl(save.mv/100,0,1);v.muted=false;
+ tmo=setTimeout(()=>{if(v.readyState<2&&act)finish()},15000); /* video can't load -> don't block the game */
+ const pr=v.play();if(pr&&pr.catch)pr.catch(()=>{v.muted=true;const q=v.play();if(q&&q.catch)q.catch(finish)})}
+v.addEventListener('playing',()=>{clearTimeout(tmo);if(!save.intro){save.intro=1;persist()}});
+v.addEventListener('ended',finish);v.addEventListener('error',()=>{if(act)finish()});
+$('skip').addEventListener('click',e=>{e.stopPropagation();sfx.click();finish()});
+addEventListener('keydown',e=>{if(!act)return;e.preventDefault();e.stopImmediatePropagation();if(['Escape','Enter','Space'].includes(e.code))finish()},true);
+window.introGate=play=>{if(act)return;if(save.intro)play();else run(play)};
+$('introb').addEventListener('click',()=>{A();if(state=='menu')run(null)});
+})();
 </script></body></html>
