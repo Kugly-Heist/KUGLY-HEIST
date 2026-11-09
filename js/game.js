@@ -187,7 +187,7 @@ const c=new THREE.Mesh(MG.cap,MG.wm);c.position.set(x,y,0);h.add(c);const o=new 
 h.scale.setScalar(1.1);h.position.y=.12;g.add(h);return g}
 const shG=new THREE.IcosahedronGeometry(.45),shM=M(0x55ccff,.2,.2,{emissive:0x2277aa}),x2G=new THREE.OctahedronGeometry(.45),x2M=M(0xb060ff,.3,.3,{emissive:0x4a1a80});
 const icoTex=u=>{const t=new THREE.TextureLoader().load(u);t.encoding=THREE.sRGBEncoding;return t},shTex=icoTex(ICON_SHIELD),hpTex=icoTex(ICON_HP),x2Tex=icoTex(ICON_X2),mkIco=(t,w,h)=>{const m=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false}));m.scale.set(w,h,1);return m};
-function pk(type,x,y,z){let m;if(type=='coin')m=new THREE.Mesh(coinG,coinM);else if(type=='shield')m=mkIco(shTex,1.15,1.2);else if(type=='hp')m=mkIco(hpTex,1.55,1.55);else if(type=='mag')m=mkMagnet();else m=mkIco(x2Tex,1.45,1.3);
+function pk(type,x,y,z){let m;if(type=='coin')m=new THREE.Mesh(coinG,coinM);else if(type=='shield')m=mkIco(shTex,1.15,1.2);else if(type=='hp')m=mkIco(hpTex,1.45,1.45);else if(type=='mag')m=mkMagnet();else m=mkIco(x2Tex,1.45,1.3);
 m.position.set(x,y,z);S.add(m);pks.push({m,type})}
 function spawnRow(z,d){const df=Math.min(1,d/1200),r=Math.random();let kind=r<.5?'low':r<.75?'bar':'wall';if(d<150&&kind=='wall'&&Math.random()<.6)kind='low';if(d<60)kind='low';
 const ln=[0,1,2].sort(()=>Math.random()-.5),used=[];
