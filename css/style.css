@@ -30,3 +30,20 @@ button.s{background:#3b2a1c;color:var(--cream);box-shadow:0 3px 0 #1b0f06;paddin
 #intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
 @media (orientation:portrait){#intro video{object-fit:contain}}
 #skip{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));padding:10px 24px;font-size:15px;opacity:.85}
+
+/* ---- main menu layout ---- */
+#menu{gap:12px}
+.card{background:#140c06b0;border:1px solid #f2b54440;border-radius:14px;padding:10px 22px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-sizing:border-box}
+#menu .st{gap:clamp(16px,3vw,36px);text-shadow:0 2px 6px #000}
+#menu .st div{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.95}
+#menu .st b{font-size:1.9em;letter-spacing:0;text-transform:none;margin-top:2px}
+#play{font-size:28px;padding:14px 84px;margin:4px 0 2px}
+.mrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.aud{display:flex;flex-direction:column;align-items:center;gap:10px}
+#menu .help{text-shadow:0 1px 6px #000;opacity:.9;margin-top:2px}
+button.dng{background:transparent;box-shadow:none;color:#f7e8cca0;text-decoration:underline;font-size:12px;letter-spacing:.06em;padding:4px 10px;margin-top:2px}
+button.dng:hover{color:#ff8a6a;transform:none}
+@media (max-height:620px){#menu{gap:8px}#menu .sub:first-child{display:none}#play{font-size:22px;padding:10px 64px}#menu .help small{display:none}.card{padding:6px 16px}#menu .st b{font-size:1.5em}}
+@media (max-height:470px){#menu .help{display:none}h1{font-size:clamp(34px,8vw,60px)}}
+.card{max-width:calc(100vw - 24px)}
+@media (max-width:480px){#menu .st{gap:12px;padding:10px 12px}#menu .st div{font-size:10px}#menu .st b{font-size:1.6em}}
