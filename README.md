@@ -23,6 +23,8 @@ Keys can be rebound in the **Controls** menu. A gamepad also works (stick / D-pa
 - Shop with upgrades (magnet and score duration, start with shield) and a skateboard boost
 - Rebindable keys, gamepad and touch support
 - Music and SFX volume sliders, intro video, progress saved in `localStorage`
+- Daily run: the same obstacle layout for everyone each UTC day, with your best score of the day
+- Walls are solid: crashing into one knocks you back and costs you distance to the enemy, so dodge to another lane (a shield smashes the wall)
 - Local Top 5 leaderboard (best runs by score, saved in `localStorage`)
 - Works offline after the first visit (service worker) and can be installed as an app
 

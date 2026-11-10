@@ -184,3 +184,4 @@ button[disabled]{cursor:default}
 #top .sr{width:min(420px,88vw)}
 .nav{grid-template-columns:repeat(auto-fit,minmax(96px,1fr))}
 @media (max-width:480px){.nav{grid-template-columns:repeat(2,1fr)}}
+#dailyb{grid-column:1/-1}
