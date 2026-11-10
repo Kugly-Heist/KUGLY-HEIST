@@ -411,7 +411,7 @@ const CASE_PRICE=100,RAR=[{n:'Mil-Spec',c:'#4b69ff',p:40,w:.7992},{n:'Restricted
 const CASE_ITEMS=[['MP9 | Hot Rod','Glock-18 | Candy Apple','P250 | Sand Dune','Nova | Walnut','MAC-10 | Silver','Five-SeveN | Case Hardened'],['AK-47 | Redline','M4A4 | Desert-Strike','USP-S | Orion','Desert Eagle | Blaze','SSG 08 | Blood in the Water'],['AWP | Asiimov','M4A1-S | Hyper Beast','AK-47 | Vulcan','USP-S | Kill Confirmed'],['AK-47 | Fire Serpent','AWP | Dragon Lore','M4A4 | Howl','Desert Eagle | Printstream','USP-S | Printstream','M4A1-S | Printstream'],['★ Karambit | Doppler','★ Butterfly Knife | Lore','★ Karambit | Fade',"★ Sport Gloves | Pandora's Box"]];
 let csBusy=false;
 const CS_IMG={'Desert Eagle | Printstream':'deagle-printstream','USP-S | Printstream':'usp-s-printstream','M4A1-S | Printstream':'m4a1-s-printstream','★ Karambit | Doppler':'karambit','★ Butterfly Knife | Lore':'butterfly-knife'};
-const csIcon=(t,n)=>CS_IMG[n]?'<img src="img/skins/'+CS_IMG[n]+'.png" alt="" draggable="false">':t==4?'🔪':'🔫';
+const csIcon=(t,n)=>CS_IMG[n]?'<img src="img/skins/'+CS_IMG[n]+'.png" alt="" draggable="false">':'';
 function csItem(t){const l=CASE_ITEMS[t];return{t,n:l[Math.random()*l.length|0]}}
 function csPick(){let r=Math.random();for(let i=4;i>=1;i--){if(r<RAR[i].w)return csItem(i);r-=RAR[i].w}return csItem(0)}
 function csFill(){const r=Math.random();return csItem(r<.02?3:r<.08?2:r<.28?1:0)}

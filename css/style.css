@@ -204,3 +204,4 @@ button[disabled]{cursor:default}
 .cs_it span img{width:92px;height:57px;object-fit:contain;display:block;pointer-events:none}
 .cs_it:has(img) span{height:57px;display:flex;align-items:center}
 #cs_inv .cs_th{flex:0 0 auto}#cs_inv .cs_th img{width:72px;height:45px;object-fit:contain;display:block}#cs_inv .cs_th:empty{display:none}
+.cs_it span:empty{display:none}
