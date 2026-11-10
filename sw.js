@@ -3,14 +3,16 @@
    and the old cache is deleted when the new worker activates.
 
    IMPORTANT: bump CACHE below on every release, otherwise players keep the old files. */
-const CACHE = 'kugly-heist-20261110h';
+const CACHE = 'kugly-heist-20261110j';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/three.min.js', 'js/GLTFLoader.js', 'js/data-icons.js', 'js/game.js', 'js/intro.js',
   'icon-192.png', 'icon-512.png',
   'models/agent.glb', 'models/body.bin',
   'music/lobby.mp3', 'music/main.mp3',
-  'video/intro.mp4'
+  'video/intro.mp4',
+  'img/skins/deagle-printstream.png', 'img/skins/usp-s-printstream.png', 'img/skins/m4a1-s-printstream.png',
+  'img/skins/karambit.png', 'img/skins/butterfly-knife.png'
 ];
 
 self.addEventListener('install', e => {

@@ -408,15 +408,16 @@ on('crb',()=>show('cr'));on('crx',()=>show('menu'));on('topb',()=>{renderTop();s
 on('shopb',()=>{shopRender();show('shop')});on('ctlb',()=>{rbd=null;ctlRender();show('ctl')});on('ctb',()=>{rbd=null;show('menu')});on('ctr',()=>{for(const a in KDEF)keys[a]=KDEF[a].slice();rbd=null;saveKeys();ctlRender()});on('shb',()=>{menuStats();show('menu')});
 /* ---------- Case: spend $100, roll an item (odds like a CS case) ---------- */
 const CASE_PRICE=100,RAR=[{n:'Mil-Spec',c:'#4b69ff',p:40,w:.7992},{n:'Restricted',c:'#8847ff',p:90,w:.1598},{n:'Classified',c:'#d32ee6',p:250,w:.032},{n:'Covert',c:'#eb4b4b',p:800,w:.0064},{n:'Rare ★',c:'#ffd700',p:3000,w:.0026}];
-const CASE_ITEMS=[['MP9 | Hot Rod','Glock-18 | Candy Apple','P250 | Sand Dune','Nova | Walnut','MAC-10 | Silver','Five-SeveN | Case Hardened'],['AK-47 | Redline','M4A4 | Desert-Strike','USP-S | Orion','Desert Eagle | Blaze','SSG 08 | Blood in the Water'],['AWP | Asiimov','M4A1-S | Hyper Beast','AK-47 | Vulcan','USP-S | Kill Confirmed'],['AK-47 | Fire Serpent','AWP | Dragon Lore','M4A4 | Howl'],['★ Karambit | Doppler','★ Butterfly Knife | Fade','★ Karambit | Fade',"★ Sport Gloves | Pandora's Box"]];
+const CASE_ITEMS=[['MP9 | Hot Rod','Glock-18 | Candy Apple','P250 | Sand Dune','Nova | Walnut','MAC-10 | Silver','Five-SeveN | Case Hardened'],['AK-47 | Redline','M4A4 | Desert-Strike','USP-S | Orion','Desert Eagle | Blaze','SSG 08 | Blood in the Water'],['AWP | Asiimov','M4A1-S | Hyper Beast','AK-47 | Vulcan','USP-S | Kill Confirmed'],['AK-47 | Fire Serpent','AWP | Dragon Lore','M4A4 | Howl','Desert Eagle | Printstream','USP-S | Printstream','M4A1-S | Printstream'],['★ Karambit | Doppler','★ Butterfly Knife | Lore','★ Karambit | Fade',"★ Sport Gloves | Pandora's Box"]];
 let csBusy=false;
-const csIcon=t=>t==4?'🔪':'🔫';
+const CS_IMG={'Desert Eagle | Printstream':'deagle-printstream','USP-S | Printstream':'usp-s-printstream','M4A1-S | Printstream':'m4a1-s-printstream','★ Karambit | Doppler':'karambit','★ Butterfly Knife | Lore':'butterfly-knife'};
+const csIcon=(t,n)=>CS_IMG[n]?'<img src="img/skins/'+CS_IMG[n]+'.png" alt="" draggable="false">':t==4?'🔪':'🔫';
 function csItem(t){const l=CASE_ITEMS[t];return{t,n:l[Math.random()*l.length|0]}}
 function csPick(){let r=Math.random();for(let i=4;i>=1;i--){if(r<RAR[i].w)return csItem(i);r-=RAR[i].w}return csItem(0)}
 function csFill(){const r=Math.random();return csItem(r<.02?3:r<.08?2:r<.28?1:0)}
-const csCard=it=>'<div class="cs_it" style="--rc:'+RAR[it.t].c+'"><span>'+csIcon(it.t)+'</span>'+it.n+'</div>';
+const csCard=it=>'<div class="cs_it" style="--rc:'+RAR[it.t].c+'"><span>'+csIcon(it.t,it.n)+'</span>'+it.n+'</div>';
 function csInv(){const inv=save.inv||(save.inv={}),list=Object.keys(inv).filter(k=>inv[k]>0).map(k=>({k:k,t:+k.split('|')[0],n:k.slice(k.indexOf('|')+1),q:inv[k]})).sort((a,b)=>b.t-a.t||a.n.localeCompare(b.n));
-$('cs_inv').innerHTML=list.map(o=>'<div class="sr" style="--rc:'+RAR[o.t].c+'"><div class="i"><b>'+o.n+(o.q>1?' ×'+o.q:'')+'</b><small>'+RAR[o.t].n+'</small></div><button class="s" data-k="'+o.k.split('"').join('&quot;')+'">Sell $'+RAR[o.t].p+'</button></div>').join('')||'<div class="help">No items yet.</div>'}
+$('cs_inv').innerHTML=list.map(o=>'<div class="sr" style="--rc:'+RAR[o.t].c+'"><span class="cs_th">'+(CS_IMG[o.n]?csIcon(o.t,o.n):'')+'</span><div class="i"><b>'+o.n+(o.q>1?' ×'+o.q:'')+'</b><small>'+RAR[o.t].n+'</small></div><button class="s" data-k="'+o.k.split('"').join('&quot;')+'">Sell $'+RAR[o.t].p+'</button></div>').join('')||'<div class="help">No items yet.</div>'}
 function csRender(){$('cs_m').textContent='$'+save.money;$('cs_n').textContent=save.cases|0;$('cs_open').disabled=csBusy||save.money<CASE_PRICE;csInv()}
 function csOpen(){if(csBusy||save.money<CASE_PRICE)return;csBusy=true;save.money-=CASE_PRICE;save.cases=(save.cases|0)+1;const w=csPick(),key=w.t+'|'+w.n;(save.inv||(save.inv={}))[key]=(save.inv[key]||0)+1;persist();
 const N=44,W=36,items=[];for(let i=0;i<N;i++)items.push(i==W?w:csFill());const st=$('cs_strip');st.style.transition='none';st.innerHTML=items.map(csCard).join('');st.style.transform='translateX(0)';
